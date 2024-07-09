@@ -9,7 +9,7 @@ pn = st.text_input('Search for a card')
 
 @st.cache_resource
 def init_connection():
-    conn = st.connection("postgresql", type="sql", pool_size=5)
+    conn = st.connection("postgresql", type="sql")
 
     return conn
 
