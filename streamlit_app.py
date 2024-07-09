@@ -4,7 +4,7 @@ import os
 
 st.set_page_config(layout="wide")
 st.title("⚾ Acme Card Co 🏈")
-pn = st.text_input('Search for a card')
+pn = st.text_input('Search for a pre-2006 card')
 
 
 @st.cache_resource
