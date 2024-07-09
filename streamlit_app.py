@@ -1,6 +1,32 @@
-import streamlit as st
 
-st.title("🎈 My new app")
-st.write(
-    "Let's start building! For help and inspiration, head over to [docs.streamlit.io](https://docs.streamlit.io/)."
-)
+import streamlit as st
+import os
+from st_supabase_connection import SupabaseConnection, execute_query
+#from supabase import create_client, Client
+
+st.set_page_config(layout="wide")
+st.title("⚾ Acme Card Co 🏈")
+pn = st.text_input('Search for a card')
+
+
+@st.cache_resource
+def init_connection():
+    conn = st.connection("postgresql", type="sql", pool_size=5)
+
+    return conn
+
+conn = init_connection()
+
+if len(pn) > 0:
+    card = pn
+    df = conn.query(f'select *, SIMILARITY(search_string, \'{card}\') as sim from "ACMETRADING_checklist_pre1970" where SIMILARITY(search_string, \'{card}\') > 0.1 ORDER BY sim DESC limit 20', ttl="10m")
+
+    # Print results.
+    st.dataframe(df[['search_string', 'parallel', 'sim', 'url_full']], use_container_width=True, hide_index=True,
+    column_config={
+        "search_string": "Card",
+        "parallel": 'Parallel',
+                    "sim": "Score",
+                  "url_full": st.column_config.LinkColumn()
+                  })
+
