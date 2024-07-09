@@ -1,8 +1,6 @@
 
 import streamlit as st
 import os
-from st_supabase_connection import SupabaseConnection, execute_query
-#from supabase import create_client, Client
 
 st.set_page_config(layout="wide")
 st.title("⚾ Acme Card Co 🏈")
